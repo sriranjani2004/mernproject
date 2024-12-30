@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     environment {
         PATH = "C:\\Program Files\\nodejs"
     }
@@ -8,7 +8,7 @@ pipeline {
     tools {
         nodejs 'NodeJS'
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Install dependencies') {
             steps {
                 bat '''
                 npm install
