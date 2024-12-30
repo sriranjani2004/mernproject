@@ -8,8 +8,7 @@ pipeline {
     tools {
         nodejs 'NodeJS'
     }
-
-
+    
     stages {
         stage('Checkout') {
             steps {
@@ -21,6 +20,7 @@ pipeline {
             steps {
                 bat '''
                 npm install
+                npm run lint
                 '''
             }
         }
