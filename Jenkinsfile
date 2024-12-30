@@ -1,12 +1,12 @@
 pipeline {
     agent any
 
-    environment {
-        PATH = "C:\\Program Files\\nodejs"
-    }
-
     tools {
-        nodejs 'NodeJS'
+        nodejs 'NodeJS'  
+    }
+    
+    environment {
+        NODEJS_HOME = 'C:\\Program Files\\nodejs'
     }
 
     stages {
@@ -15,33 +15,25 @@ pipeline {
                 checkout scm
             }
         }
-
-        stage('Install dependencies') {
+        
+        stage('Install and Build') {
             steps {
-                bat '''
-                npm install
-                npm run lint
-                '''
+                bat '''npm install
+                npm run lint'''  
             }
         }
 
-        stage('Build'){
-            steps{
-                bat '''
-                npm run build
-                '''
-            }
-        }
-        stage('SonarQube Analysis') {
+        
+        stage('SonarCodeAnalysis') {
             environment {
-                SONAR_TOKEN = credentials('sonarqube-token')
+                SONAR_TOKEN = credentials('sonarqube-token')  
             }
             steps {
                 bat '''
                 sonar-scanner -Dsonar.projectKey=mern-backend ^
                 -Dsonar.sources=. ^
                 -Dsonar.host.url=http://localhost:9000 ^
-                -Dsonar.token=%SONAR_TOKEN%
+                -Dsonar.token=%SONAR_TOKEN% 
                 '''
             }
         }
@@ -49,10 +41,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully.'
+            echo "Pipeline SUCCESSFULLY Build"
         }
         failure {
-            echo 'Pipeline failed.'
+            echo " Pipeline failed"
         }
     }
 }
