@@ -25,6 +25,13 @@ pipeline {
             }
         }
 
+        stage('Build'){
+            steps{
+                bat '''
+                npm run build
+                '''
+            }
+        }
         stage('SonarQube Analysis') {
             environment {
                 SONAR_TOKEN = credentials('sonarqube-token')
