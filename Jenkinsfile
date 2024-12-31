@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         nodejs 'NodeJS'  // Ensure NodeJS is configured properly
-        sonarScanner 'SonarQube Scanner'  // Use the name configured in Jenkins Global Tool Configuration
+        sonarRunner 'SonarQube Scanner'  // Correct tool name for SonarQube Scanner in Jenkins
     }
     
     environment {
