@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS'
-        sonarScanner 'SonarQube Scanner'  // Add this line to configure the Sonar Scanner
+        nodejs 'NodeJS'            // NodeJS tool configured in Global Tool Configuration
+        sonarScanner 'SonarQube Scanner'  // SonarQube Scanner tool configured in Global Tool Configuration
     }
     
     environment {
