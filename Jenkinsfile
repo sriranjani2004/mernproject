@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS'  
+        nodejs 'NodeJS'
+        sonarScanner 'SonarQubeScanner'  // Add this line to configure the Sonar Scanner
     }
     
     environment {
@@ -43,7 +44,7 @@ pipeline {
             echo "Pipeline SUCCESSFULLY Build"
         }
         failure {
-            echo " Pipeline failed"
+            echo "Pipeline failed"
         }
     }
 }
