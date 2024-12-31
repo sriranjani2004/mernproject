@@ -2,11 +2,12 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'nodejs-20.18.1'
+        nodejs 'nodejs-20.18.1' // Ensure this tool is configured in Jenkins
     }
-    
+
     environment {
         NODEJS_HOME = '/usr/local/bin/node'
+        PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"  // Ensure Node.js is in the PATH
     }
 
     stages {
@@ -19,6 +20,7 @@ pipeline {
         stage('Install and Build') {
             steps {
                 sh '''npm install
+                npm install -g sonar-scanner  // Optional: Install sonar-scanner globally if needed
                 npm run lint'''
             }
         }
@@ -40,7 +42,7 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline SUCCESSFULLY Build"
+            echo "Pipeline SUCCESSFULLY Built"
         }
         failure {
             echo "Pipeline failed"
