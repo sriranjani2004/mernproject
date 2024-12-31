@@ -21,9 +21,8 @@ pipeline {
             steps {
                 sh '''
                 # Ensure node_modules/.bin is in the PATH for local tools like ESLint
-                export PATH=$PWD/node_modules/.bin:$PATH
                 npm install
-                npm run lint
+                npx eslint .
                 '''  
             }
         }
