@@ -1,0 +1,6 @@
+projectKey=mern-backend
+serverUrl=http://localhost:9000
+serverVersion=24.12.0.100206
+dashboardUrl=http://localhost:9000/dashboard?id=mern-backend
+ceTaskId=03c14662-0e54-4ed1-b23b-f18e41d6e731
+ceTaskUrl=http://localhost:9000/api/ce/task?id=03c14662-0e54-4ed1-b23b-f18e41d6e731
