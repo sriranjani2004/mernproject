@@ -30,7 +30,7 @@ pipeline {
             }
             steps {
                 sh '''
-                sonar-scanner -Dsonar.projectKey=mern-backend \
+                sonar-scanner -Dsonar.projectKey=mernbackendproject \
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://localhost:9000 \
                 -Dsonar.token=${SONAR_TOKEN}
