@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         NODEJS_HOME = '/usr/local/bin/node'
-        PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"  // Ensure Node.js is in the PATH
+        PATH = "${env.NODEJS_HOME}/bin:/usr/local/bin:${env.PATH}"  // Ensure Node.js and Sonar Scanner are in the PATH
     }
 
     stages {
