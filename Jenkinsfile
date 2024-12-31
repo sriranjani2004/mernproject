@@ -26,16 +26,27 @@ pipeline {
 
         stage('SonarCodeAnalysis') {
             environment {
-                SONAR_TOKEN = credentials('sonar-token')
+                SONAR_TOKEN = credentials('sonar-token')  // Inject SonarQube token from Jenkins credentials
             }
             steps {
-                sh '''
-                export PATH=$PATH:/Users/ariv/Downloads/sonar-scanner-6.2.1.4610-macosx-x64/bin
-                sonar-scanner -Dsonar.projectKey=mernbackendproject \
-                -Dsonar.sources=. \
-                -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.token=${SONAR_TOKEN}
-                '''
+                script {
+                    // Check if sonar-scanner is accessible in the PATH
+                    def sonarScannerPath = sh(script: 'which sonar-scanner', returnStdout: true).trim()
+
+                    if (sonarScannerPath) {
+                        echo "Found sonar-scanner at ${sonarScannerPath}"
+                    } else {
+                        error "sonar-scanner is not found in the PATH"
+                    }
+
+                    // Run sonar-scanner analysis
+                    sh '''
+                    sonar-scanner -Dsonar.projectKey=mernbackendproject \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=http://localhost:9000 \
+                    -Dsonar.token=${SONAR_TOKEN}
+                    '''
+                }
             }
         }
     }
