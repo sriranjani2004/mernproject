@@ -1,14 +1,13 @@
 pipeline {
     agent any
-
     tools {
-        nodejs 'NodeJS'  // Ensure NodeJS is configured properly
+        nodejs 'nodejs-20.11.0'  
     }
     
     environment {
-        SONAR_SCANNER_HOME = '/Users/ariv/Downloads/sonar-scanner-6.2.1.4610-macosx-x64'
-        PATH = "$SONAR_SCANNER_HOME/bin:$PATH"
-        SONAR_TOKEN = credentials('sonar-token')  // Make sure the token is stored in Jenkins Credentials
+        NODEJS_HOME = '/usr/local/bin/node'
+        SONAR_SCANNER_PATH = '/Users/ariv/Downloads/sonar-scanner-6.2.1.4610-macosx-x64/bin/sonar-scanner'
+        PROJECT_KEY = 'newprojectbackend'  // Use your desired project key here
     }
 
     stages {
@@ -25,10 +24,16 @@ pipeline {
             }
         }
 
+        
         stage('SonarCodeAnalysis') {
+            environment {
+                SONAR_TOKEN = credentials('sonar-token')  
+            }
             steps {
                 sh '''
-                sonar-scanner -Dsonar.projectKey=mernbackendpro \
+                export PATH=$SONAR_SCANNER_PATH:$PATH
+                which sonar-scanner || echo "SonarQube scanner not found. Please install it."
+                sonar-scanner -Dsonar.projectKey=$PROJECT_KEY \
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://localhost:9000 \
                 -Dsonar.token=$SONAR_TOKEN
@@ -42,7 +47,7 @@ pipeline {
             echo "Pipeline SUCCESSFULLY Build"
         }
         failure {
-            echo "Pipeline failed"
+            echo " Pipeline failed"
         }
     }
 }
