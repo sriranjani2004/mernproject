@@ -3,12 +3,12 @@ pipeline {
 
     tools {
         nodejs 'NodeJS'  // Ensure NodeJS is configured properly
-        sonarRunner 'SonarQube Scanner'  // Correct tool name for SonarQube Scanner in Jenkins
     }
     
     environment {
-        NODEJS_HOME = '/usr/local/bin/node'
-        PATH = "/Users/ariv/Downloads/sonar-scanner-6.2.1.4610-macosx-x64/bin:$PATH"  // Ensure SonarScanner is in PATH
+        SONAR_SCANNER_HOME = '/Users/ariv/Downloads/sonar-scanner-6.2.1.4610-macosx-x64'
+        PATH = "$SONAR_SCANNER_HOME/bin:$PATH"
+        SONAR_TOKEN = credentials('sonar-token')  // Make sure the token is stored in Jenkins Credentials
     }
 
     stages {
@@ -26,15 +26,12 @@ pipeline {
         }
 
         stage('SonarCodeAnalysis') {
-            environment {
-                SONAR_TOKEN = credentials('sonar-token')  // Ensure SonarQube token is stored in Jenkins credentials
-            }
             steps {
                 sh '''
                 sonar-scanner -Dsonar.projectKey=mernbackendpro \
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.token=$SONAR_TOKEN 
+                -Dsonar.token=$SONAR_TOKEN
                 '''
             }
         }
@@ -42,7 +39,7 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline SUCCESSFULLY Built"
+            echo "Pipeline SUCCESSFULLY Build"
         }
         failure {
             echo "Pipeline failed"
