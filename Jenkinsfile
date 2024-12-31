@@ -19,9 +19,8 @@ pipeline {
         
         stage('Install and Build') {
             steps {
-                sh '''npm install
-                npm install -g sonar-scanner  // Optional: Install sonar-scanner globally if needed
-                npm run lint'''
+                sh 'npm install'
+                sh 'npm run lint'
             }
         }
 
