@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'nodejs-20.18.1'  
+        nodejs 'nodejs-20.18.1'
     }
     
     environment {
@@ -18,22 +18,21 @@ pipeline {
         
         stage('Install and Build') {
             steps {
-                bat '''npm install
-                npm run lint'''  
+                sh '''npm install
+                npm run lint'''
             }
         }
 
-        
         stage('SonarCodeAnalysis') {
             environment {
                 SONAR_TOKEN = credentials('sonar-token')  
             }
             steps {
-                bat '''
-                sonar-scanner -Dsonar.projectKey=mern-backend ^
-                -Dsonar.sources=. ^
-                -Dsonar.host.url=http://localhost:9000 ^
-                -Dsonar.token=%SONAR_TOKEN% 
+                sh '''
+                sonar-scanner -Dsonar.projectKey=mern-backend \
+                -Dsonar.sources=. \
+                -Dsonar.host.url=http://localhost:9000 \
+                -Dsonar.token=${SONAR_TOKEN}
                 '''
             }
         }
@@ -44,7 +43,7 @@ pipeline {
             echo "Pipeline SUCCESSFULLY Build"
         }
         failure {
-            echo " Pipeline failed"
+            echo "Pipeline failed"
         }
     }
 }
