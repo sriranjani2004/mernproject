@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'nodejs-20.18.1' 
+        nodejs 'nodejs-20.18.1'
     }
 
     environment {
@@ -16,7 +16,7 @@ pipeline {
                 checkout scm
             }
         }
-        
+
         stage('Install and Build') {
             steps {
                 sh 'npm install'
@@ -26,11 +26,11 @@ pipeline {
 
         stage('SonarCodeAnalysis') {
             environment {
-                SONAR_TOKEN = credentials('sonar-token')  
+                SONAR_TOKEN = credentials('sonar-token')
             }
             steps {
                 sh '''
-                export PATH=$PATH:/usr/local/bin  // Add the correct path to sonar-scanner
+                export PATH=$PATH:/Users/ariv/Downloads/sonar-scanner-6.2.1.4610-macosx-x64/bin  // Add the correct path to sonar-scanner
                 sonar-scanner -Dsonar.projectKey=mernbackendproject \
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://localhost:9000 \
