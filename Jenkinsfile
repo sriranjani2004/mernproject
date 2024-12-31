@@ -29,18 +29,16 @@ pipeline {
                 SONAR_TOKEN = credentials('sonar-token')  
             }
             steps {
-                  sh '''
-export PATH=$PATH:/path/to/sonar-scanner/bin
-sonar-scanner -Dsonar.projectKey=mernbackendproject \
--Dsonar.sources=. \
--Dsonar.host.url=http://localhost:9000 \
--Dsonar.token=${SONAR_TOKEN}
-'''
+                sh '''
+                export PATH=$PATH:/usr/local/bin  // Add the correct path to sonar-scanner
+                sonar-scanner -Dsonar.projectKey=mernbackendproject \
+                -Dsonar.sources=. \
+                -Dsonar.host.url=http://localhost:9000 \
+                -Dsonar.token=${SONAR_TOKEN}
+                '''
             }
         }
     }
- 
-
 
     post {
         success {
