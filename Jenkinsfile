@@ -3,9 +3,8 @@ pipeline {
 
     tools {
         nodejs 'NodeJS'  // Ensure NodeJS is configured properly
-        sonarRunner 'SonarQube Scanner'  // Use 'sonarRunner' instead of 'sonarScanner'
     }
-    
+
     environment {
         NODEJS_HOME = '/usr/local/bin/node'
     }
@@ -16,7 +15,7 @@ pipeline {
                 checkout scm
             }
         }
-        
+
         stage('Install and Build') {
             steps {
                 sh '''npm install
