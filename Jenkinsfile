@@ -3,10 +3,12 @@ pipeline {
 
     tools {
         nodejs 'NodeJS'  // Ensure NodeJS is configured properly
+        sonarScanner 'SonarQube Scanner'  // Use the name configured in Jenkins Global Tool Configuration
     }
-
+    
     environment {
         NODEJS_HOME = '/usr/local/bin/node'
+        PATH = "/Users/ariv/Downloads/sonar-scanner-6.2.1.4610-macosx-x64/bin:$PATH"  // Ensure SonarScanner is in PATH
     }
 
     stages {
@@ -15,7 +17,7 @@ pipeline {
                 checkout scm
             }
         }
-
+        
         stage('Install and Build') {
             steps {
                 sh '''npm install
@@ -25,7 +27,7 @@ pipeline {
 
         stage('SonarCodeAnalysis') {
             environment {
-                SONAR_TOKEN = credentials('sonar-token')  
+                SONAR_TOKEN = credentials('sonar-token')  // Ensure SonarQube token is stored in Jenkins credentials
             }
             steps {
                 sh '''
@@ -40,7 +42,7 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline SUCCESSFULLY Build"
+            echo "Pipeline SUCCESSFULLY Built"
         }
         failure {
             echo "Pipeline failed"
