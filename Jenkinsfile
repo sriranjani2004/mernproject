@@ -30,7 +30,7 @@ pipeline {
             }
             steps {
                 sh '''
-                export PATH=$PATH:/Users/ariv/Downloads/sonar-scanner-6.2.1.4610-macosx-x64/bin  // Add the correct path to sonar-scanner
+                export PATH=$PATH:/Users/ariv/Downloads/sonar-scanner-6.2.1.4610-macosx-x64/bin
                 sonar-scanner -Dsonar.projectKey=mernbackendproject \
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://localhost:9000 \
