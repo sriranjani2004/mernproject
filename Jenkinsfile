@@ -6,7 +6,7 @@ pipeline {
     }
     
     environment {
-        NODEJS_HOME = 'C:\\Program Files\\nodejs'
+        NODEJS_HOME = '/usr/local/bin/node'
     }
 
     stages {
@@ -26,7 +26,7 @@ pipeline {
         
         stage('SonarCodeAnalysis') {
             environment {
-                SONAR_TOKEN = credentials('sonarqube-token')  
+                SONAR_TOKEN = credentials('sonar-token')  
             }
             steps {
                 bat '''
